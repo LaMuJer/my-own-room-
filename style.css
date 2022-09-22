@@ -1,0 +1,280 @@
+*{
+    margin: 0 ;
+    padding: 0 ;
+    box-sizing: border-box;
+    font-family: 'MilkyWalky-Regular';
+    color: #fff;
+}
+@font-face {
+    font-family: 'MilkyWalky-Regular';
+    src: url('fonts/MilkyWalky-Regular.ttf') ;
+    font-weight: 200 800;
+    font-display: swap;
+    font-style: normal;
+}
+body{
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #f7fff6;
+}
+h1,h2,h3,h4,h5,h6{
+    cursor: default;
+}
+.webgl
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+    z-index: -1;
+    /*z-index: 2;*/
+}
+.text-container{
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    right: -100%;
+    overflow: hidden;
+    transform-origin: right;
+    background-color: #000000;
+}
+.text-wrapper{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.text-div{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.text{
+    width: 100%;
+    white-space: nowrap;
+}
+.text h1{
+    font-weight: 700;
+    font-size: 80px;
+}
+video, audio{
+    visibility: hidden;
+    z-index: -9;
+    position: absolute;
+}
+.all-container{
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+.nav{
+    position: relative;
+    width: 100%;
+    height: 10vh;
+    overflow-y: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo-nav{
+    width: 10%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.right-nav{
+    width: 15%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.nav h1{
+    color: #00a9a5;
+}
+.nav h2{
+    color: #00539c;
+}
+.right-nav h3, .right-nav span{
+    color: #00539c;
+}
+.music-nav{
+    width: 30%;
+    height: 25%;
+    position: relative;
+}
+.pitches{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    justify-content: space-around;
+    align-items: start;
+    overflow: hidden;
+    cursor: pointer;
+}
+.pitches span{
+    margin: 0;
+    padding: 0;
+    width: 1px;
+}
+.music-box{
+    position: absolute;
+    z-index: 2;
+    width: 200px;
+    height: 20%;
+    right: -18%;
+    bottom: 35%;
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.8);
+    /*filter: drop-shadow(4px 4px 10px #000);*/
+    box-shadow: inset 10px 10px 10px rgba(0,0,0,0.05),
+                15px 25px 10px rgba(0,0,0,0.05),
+                15px 20px 20px rgba(0,0,0,0.05),
+                inset -10px -10px 15px rgba(255,255,255,0.9);
+}
+.lower{
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    padding: 10px 0px;
+}
+.list1{
+    width: 100%;
+    height: 50%;
+    overflow: hidden;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.list1 h3{
+    position: absolute;
+    bottom: -50px;
+    letter-spacing: 1px;
+    color: #241715;
+    cursor: pointer;
+}
+.body{
+    width: 100%;
+    height: 75vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+.title-div{
+    width: 100%;
+    height: 35%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    z-index: -2;
+}
+.title-div span{
+    overflow-y: hidden;
+}
+.title-div span h1{
+    font-weight: bolder;
+    letter-spacing: 1px;
+    font-size: 150px;
+    mix-blend-mode: difference;
+}
+.title{
+    color: #241715;
+}
+.createdBy{
+    width: 100%;
+    height: 5%;
+    overflow: hidden;
+    position: absolute;
+    z-index: -2;
+    top: 30%;
+    padding-right: 100px;
+    display: flex;
+    justify-content: end;
+    align-items: start;
+}
+.createdBy h3{
+    color: #241715;
+}
+.footer{
+    width: 100%;
+    height: 15vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.footer-left,.footer-right{
+    width: 30%;
+    height: 100%;
+}
+.footer-center{
+    width: 40%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.explore-div{
+    width: 70%;
+    height: 50%;
+    display: flex;
+    justify-content: start;
+    align-items: end;
+    white-space: nowrap;
+    overflow: hidden;
+    transform-origin: left;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    filter: drop-shadow(4px 4px 10px #ffffff);
+    box-shadow: inset 10px 10px 10px rgba(0,0,0,0.05),
+                15px 25px 10px rgba(0,0,0,0.05),
+                15px 20px 20px rgba(0,0,0,0.05),
+                inset -10px -10px 15px rgba(255,255,255,0.9);
+    cursor: pointer;
+}
+#exploreText{
+    font-size: 30px;
+    font-weight: 900;
+    color: #eea47f;
+    text-shadow: -2px -2px 5px #ffffff;
+    text-transform: uppercase;
+}
+
+.emoji-container{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    /*z-index: -2;*/
+    display: flex;
+    background: transparent;
+}
+.emoji-div{
+    width: 10%;
+    height: 100%;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    /*transform: translateY(-100%);*/
+}
+.emoji-img-div{
+    width: 100px;
+    height: 100px;
+    transform: translate(700px , 590px);
+}

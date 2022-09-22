@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="img/cool.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Room</title>
+  </head>
+  <body>
+
+    <canvas class="webgl"></canvas>
+
+    <video controls loop autoplay muted playsinline id="video">
+      <source src="textures/vd.mp4"
+              type="video/mp4">
+    </video>
+
+    <audio id="audio"
+            controls loop
+            src="music/bts.mp3"
+            data-src = "music/bts.mp3"
+    >
+    </audio>
+
+    <div class="music-box">
+      <div class="lower">
+        <div class="list1" >
+          <h3 class="mtextColor" id="bts">BTS - Mikrokosmos</h3>
+        </div>
+        <div class="list1">
+          <h3 class="mtextColor" id="hai">Haikyuu - FLY HIGH</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="emoji-container">
+      <div class="emoji-div">
+        <div class="emoji-img-div">
+          <img src="img/noodle.png" alt="">
+        </div>
+      </div>
+      <div class="emoji-div">
+        <div class="emoji-img-div">
+          <img src="img/hinata.png" alt="">
+        </div>
+      </div>
+      <div class="emoji-div">
+        <div class="emoji-img-div">
+          <img src="img/tobio.png" alt="">
+        </div>
+      </div>
+      <div class="emoji-div">
+        <div class="emoji-img-div">
+          <img src="img/mic.png" alt="">
+        </div>
+      </div>
+      <div class="emoji-div">
+        <div class="emoji-img-div">
+          <img src="img/sco.png" alt="">
+        </div>
+      </div>
+    </div>
+
+    <div class="all-container">
+      <div class="nav">
+        <div class="logo-nav">
+          <h1 class="textColor">Room</h1>
+        </div>
+        <div class="right-nav">
+          <div class="about-nav">
+            <h2 class="textColor">About</h2>
+          </div>
+          <div class="music-nav">
+            <div class="pitches">
+              <span>|</span>
+              <span>|</span>
+              <span>|</span>
+              <span>|</span>
+              <span>|</span>
+              <span>|</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="title-div">
+          <span><h1 class="title" id="up">M</h1></span>
+          <span><h1 class="title" id="down">y</h1></span>
+          <span><h1 class="title" id="up">&nbsp;</h1></span>
+          <span><h1 class="title" id="down">O</h1></span>
+          <span><h1 class="title" id="up">w</h1></span>
+          <span><h1 class="title" id="down">n</h1></span>
+          <span><h1 class="title" id="up">&nbsp;</h1></span>
+          <span><h1 class="title" id="down">L</h1></span>
+          <span><h1 class="title" id="up">i</h1></span>
+          <span><h1 class="title" id="down">t</h1></span>
+          <span><h1 class="title" id="up">t</h1></span>
+          <span><h1 class="title" id="down">l</h1></span>
+          <span><h1 class="title" id="up">e</h1></span>
+          <span><h1 class="title" id="down">&nbsp;</h1></span>
+          <span><h1 class="title" id="up">R</h1></span>
+          <span><h1 class="title" id="down">o</h1></span>
+          <span><h1 class="title" id="up">o</h1></span>
+          <span><h1 class="title" id="down">m</h1></span>
+        </div>
+        <div class="createdBy">
+          <h3 class="textColor">by a Creative Dev From Myanmar</h3>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="footer-left"></div>
+        <div class="footer-center">
+          <div class="explore-div">
+            <h1 id="exploreText">
+              Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp;
+              Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp;
+            </h1>
+          </div>
+        </div>
+        <div class="footer-right">
+
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+<!--    <script src="./shaders/fragment.glsl"></script>-->
+<!--    <script src="./shaders/vertex.glsl"></script>-->
+
+  </body>
+</html>
