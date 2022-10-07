@@ -10,6 +10,70 @@
 
     <canvas class="webgl"></canvas>
 
+    <div class="point point0">
+      <div class="point-container gradientBg">
+        <div class="label">1</div>
+        <div class="point-hover-text">Books that boost my self-esteem</div>
+      </div>
+    </div>
+    <div class="point point1">
+      <div class="point-container gradientBg">
+        <div class="label">2</div>
+        <div class="point-hover-text">Movies that are always with me</div>
+      </div>
+    </div>
+    <div class="point point2">
+      <div class="point-container gradientBg">
+        <div class="label">3</div>
+        <div class="point-hover-text">Experience that I had a lot of fun</div>
+      </div>
+    </div>
+
+    <div class="leftWebGlContainer">
+      <div class="upperWelcome">
+        <div class="welcomeDiv">
+          <h1 class="welcomeText">welcome to </h1>
+        </div>
+        <div class="welcomeDiv">
+          <h1 class="welcomeText">my room </h1>
+        </div>
+      </div>
+      <div class="lowerWelcome">
+        <div class="welcomeSmallDiv">
+          <h2 class="welcomeSmallText">This is a simple 3D environment</h2>
+        </div>
+        <div class="welcomeSmallDiv">
+          <h2 class="welcomeSmallText">where you can have fun</h2>
+        </div>
+        <div class="welcomeSmallDiv">
+          <h2 class="welcomeSmallText">by dragging and discovering </h2>
+        </div>
+        <div class="welcomeSmallDiv">
+          <h2 class="welcomeSmallText">various numbers .</h2>
+        </div>
+      </div>
+    </div>
+
+    <svg>
+      <filter id="noise" x="0%" y="0%" width="100%" height="100%">
+        <feTurbulence baseFrequency="0.0 0.0" result="NOISE" numOctaves="1" id="turbulence"/>
+        <feDisplacementMap in="SourceGraphic" in2="NOISE" scale="10" />
+      </filter>
+    </svg>
+
+    <div class="pointClickContainer">
+      <div class="introText">
+        <p class="introTextInner" >Actually, I am not a book person. But these are the books that </p>
+        <p class="introTextInner">really really help me when I am at my lowest point.</p>
+        <div class="closePoint">
+          <p>Close</p>
+        </div>
+      </div>
+      <div class="pointClickLowerDiv">
+<!--        Js Part     -->
+      </div>
+    </div>
+
     <video controls loop autoplay muted playsinline id="video">
       <source src="textures/vd.mp4"
               type="video/mp4">
@@ -22,7 +86,7 @@
     >
     </audio>
 
-    <div class="music-box">
+    <div class="music-box gradientBg">
       <div class="lower">
         <div class="list1" >
           <h3 class="mtextColor" id="bts">BTS - Mikrokosmos</h3>
@@ -49,26 +113,16 @@
           <img src="img/tobio.png" alt="">
         </div>
       </div>
-      <div class="emoji-div">
-        <div class="emoji-img-div">
-          <img src="img/mic.png" alt="">
-        </div>
-      </div>
-      <div class="emoji-div">
-        <div class="emoji-img-div">
-          <img src="img/sco.png" alt="">
-        </div>
-      </div>
     </div>
 
     <div class="all-container">
       <div class="nav">
         <div class="logo-nav">
-          <h1 class="textColor">Room</h1>
+          <h1 class="textColor">room</h1>
         </div>
         <div class="right-nav">
           <div class="about-nav">
-            <h2 class="textColor">About</h2>
+            <h2 class="textColor">about</h2>
           </div>
           <div class="music-nav">
             <div class="pitches">
@@ -110,7 +164,7 @@
       <div class="footer">
         <div class="footer-left"></div>
         <div class="footer-center">
-          <div class="explore-div">
+          <div class="explore-div gradientBg">
             <h1 id="exploreText">
               Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp;
               Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp; Explore &nbsp;

@@ -7,7 +7,7 @@ import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import pic2 from "/textures/pic2.png"
 import pic1 from "/textures/cool.png"
-import gp from '/textures/gp2.jpg'
+import {books,movies,projects} from './constant.js'
 
 let webgl = document.querySelector('.webgl')
 let pitches = document.querySelector('.pitches')
@@ -56,7 +56,6 @@ musicBoxAni.to(musicBox, {
     ease: "power2"
 })
 musicBoxAni.pause()
-
 function changeMusicBox(bgC){
     musicBoxAni.to(musicBox,{
         backgroundColor: bgC,
@@ -67,7 +66,6 @@ function changeMusicBox(bgC){
                     inset -10px -10px 15px ${bgC}`
     })
 }
-
 let listAni = gsap.timeline()
 list1.forEach((list) => {
     listAni
@@ -138,6 +136,13 @@ let exploreTimeLine = gsap.timeline()
         yoyo: true,
         ease: 'linear'
     })
+function destroyExplore() {
+    gsap.to('.explore-div' , {
+        y: 200,
+        ease: "power1"
+    })
+}
+
 
 /**
  * Base
@@ -146,7 +151,7 @@ let exploreTimeLine = gsap.timeline()
 const gui = new dat.GUI({
     width: 400
 })
-// gui.hide()
+gui.hide()
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -161,8 +166,6 @@ const scene = new THREE.Scene()
  */
 // Texture loader
 const textureLoader = new THREE.TextureLoader()
-let gpTexture = textureLoader.load(gp)
-// gpTexture.encoding = THREE.sRGBEncoding
 
 // Draco loader
 const dracoLoader = new DRACOLoader()
@@ -305,17 +308,17 @@ gltfLoader.load(
         scene.add(gltf.scene)
 
         gltfSceneAni.to(gltf.scene.position,{
-            x: -2.3446,
+            x: -1.9281,
             y: -1.693,
             z: -0.916,
         })
         gltfSceneAni.to(gltf.scene.scale,{
-            x: 0.2,
-            y: 0.2,
-            z: 0.2,
+            x: 0.15,
+            y: 0.15,
+            z: 0.15,
         })
         gltfSceneAni.to(webgl,{
-            zIndex: 2,
+            zIndex: 1,
         })
         gltfSceneAni.to(gltf.scene.rotation, {
             x: -.001,
@@ -333,6 +336,221 @@ const sizes = {
     height: window.innerHeight
 }
 
+/**
+ * Camera
+ */
+// Base camera
+const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 1000)
+camera.position.x = 0
+camera.position.y = 0
+camera.position.z = 6
+scene.add(camera)
+
+let closePoint = document.querySelector('.closePoint')
+closePoint.addEventListener('click', () => {
+    gsap.to(camera.position, {
+        duration: 2,
+        x: 0,
+        y: 0,
+        z: 6,
+        ease: 'power1',
+    })
+    gsap.to(camera.scale, {
+        duration: 2,
+        x: 1,
+        y: 1,
+        z: 1,
+        ease: 'power1',
+    })
+})
+
+gui.add(camera.position, 'x', -20, 20, 0.001).name('cameraX')
+gui.add(camera.position, 'y', -10, 10, 0.001).name('cameraY')
+gui.add(camera.position, 'z', -10, 10, 0.001).name('cameraZ')
+gui.add(camera.scale, 'x', -10, 10, 0.001).name('cameraScaleX')
+gui.add(camera.scale, 'y', -10, 10, 0.001).name('cameraScaleY')
+gui.add(camera.scale, 'z', -10, 10, 0.001).name('cameraScaleZ')
+
+function cartoon (event) {
+    gsap.to('.emoji-img-div', {
+        x: event.clientX ,
+        y: event.clientY  ,
+        stagger: {
+            amount: .3,
+        },
+        ease: 'power1'
+    })
+}
+function destroyCartoon () {
+    gsap.to('.emoji-img-div' , {
+        stagger: .5,
+        ease: 'power1',
+        display: 'none'
+    })
+}
+
+let mouse = new THREE.Vector2(0,0)
+window.addEventListener('mousemove', event => onMouseMove(event))
+function onMouseMove(event){
+    gsap.to(mouse,{
+        x: (event.clientX / sizes.width) * 2 - 1 ,
+        y: -(event.clientY / sizes.height) * 2 + 1
+    })
+    cartoon(event)
+}
+
+// Points
+const rayCaster = new THREE.Raycaster()
+const points = [
+    {
+        position : new THREE.Vector3(-2, 0.8 , -1.04),
+        element: document.querySelector('.point0'),
+        cameraPos : new THREE.Vector3(8.069,-1.564,6 ),
+        cameraScaleZ: new THREE.Vector3(1,1,7.548 ),
+    },
+    {
+        position : new THREE.Vector3(-3.5, -0.5 , -1.04),
+        element: document.querySelector('.point1'),
+        cameraPos : new THREE.Vector3(10.671,4.033,5.075),
+        cameraScaleZ: new THREE.Vector3(1,1,12 ),
+    },
+    {
+        position : new THREE.Vector3(0, 0.2 , -1.04),
+        element: document.querySelector('.point2'),
+        cameraPos : new THREE.Vector3(1,0,1 )
+    }
+]
+points.forEach((point) => {
+    point.element.addEventListener('click', () => {
+        gsap.to(camera.position, {
+            duration: 2,
+            x: point.cameraPos.x ,
+            y: point.cameraPos.y,
+            z: point.cameraPos.z,
+            ease: 'power1'
+        })
+        gsap.to(camera.scale,   {
+            duration: 2,
+            x: point.cameraScaleZ.x,
+            y: point.cameraScaleZ.y,
+            z: point.cameraScaleZ.z,
+            ease: 'power1'
+        })
+    })
+})
+
+function revealPoints(){
+    gsap.to('.point' , {
+        delay: 1,
+        display: 'block',
+        y: 10,
+        stagger: .1,
+        ease: 'power1'
+    })
+}
+
+function intersectPointAppear(){
+    gsap.to('.point', {
+        duration: 1,
+        opacity: 1,
+        stagger: .1,
+        ease: 'power1'
+    })
+}
+function intersectPointDisappear(){
+    gsap.to('.point', {
+        duration: 1,
+        opacity: 0,
+        stagger: .1,
+        ease: 'power1'
+    })
+}
+
+function welcomeTo (className, each) {
+    gsap.to(className, {
+        display: 'block',
+    })
+    gsap.from(className, {
+        delay: 1,
+        duration: 2,
+        skewY: 20,
+        transformOrigin: 'left',
+        x: -100,
+        y: 100,
+        stagger: {
+          each: each,
+          from: "start",
+          ease: 'power2'
+        },
+        ease: 'power1'
+    })
+}
+
+// Click explore
+let exploreDiv = document.querySelector('#exploreText')
+exploreDiv.addEventListener('click', (e) => {
+    destroyExplore()
+    titleTimeline.reverse()
+    bodyColorChangeTimeline.play()
+    gltfSceneAni.play()
+    destroyCartoon()
+    welcomeTo('.welcomeText', .5)
+    welcomeTo('.welcomeSmallText', .2)
+    revealPoints()
+})
+
+//  Gsap Progress Animation
+let tl = gsap.timeline()
+let value = 0
+let decreaseVal = 0
+let bodyDom = document.querySelector('body')
+bodyDom.addEventListener('click' , () => {
+    tl.from('#turbulence' , {
+        attr: {'baseFrequency' : '.5,0.5'},
+        ease: 'power1',
+    })
+
+    if (value < 4 && decreaseVal >= 0){
+        value++
+        if (value > 0 && value < 4){
+            tl.to(`#bookImg${value}`, {
+                opacity: 1
+            })
+            console.log('between')
+        }
+        console.log(value)
+        if (value > 3 ){
+            decreaseVal = value - 2
+            tl.to(`#bookImg${decreaseVal+1}`, {
+                opacity: 0
+            })
+            tl.to(`#bookImg${decreaseVal}`, {
+                opacity: 1
+            })
+        }
+    }
+})
+
+let pointClickLowerDiv = document.querySelector('.pointClickLowerDiv')
+    books.map(book => {
+        pointClickLowerDiv.innerHTML += `
+            <div class="pointClickJsDiv">
+                <div class="pointClickPhoto" >
+                  <img class="pointClickPhotoImg" src='${book.img}' alt="bookImg" id="bookImg${book.id}">                 
+                </div>  
+                <div class="pointClickReason" id="bookPara${book.id}">
+                  <p class="pointClickReasonInner" >
+                    ${book.reason}
+                  </p>
+                  <a target="_blank" class="orderBtn gradientBg" href="${book.link}" id="bookLink${book.id}">
+                    <p>Order</p>
+                  </a>
+                </div>   
+            </div>                
+        `
+    })
+
+
 window.addEventListener('resize', () =>
 {
     // Update sizes
@@ -348,16 +566,6 @@ window.addEventListener('resize', () =>
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.setClearColor(0xffffff,0 )
 })
-
-/**
- * Camera
- */
-// Base camera
-const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 1000)
-camera.position.x = 0
-camera.position.y = 0
-camera.position.z = 6
-scene.add(camera)
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
@@ -380,222 +588,6 @@ renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.setClearColor(0xffffff,0 )
 
-let mouseMove = new THREE.Vector2(0,0)
-window.addEventListener('mousemove', event => onMouseMove(event))
-
-function onMouseMove(event){
-    // gsap.to(mouseMove, {
-    //     x: event.clientX ,
-    // })
-    gsap.to('.emoji-img-div', {
-        x: event.clientX ,
-        y: event.clientY  ,
-        stagger: {
-            amount: 1,
-        },
-        ease: 'power1'
-    })
-}
-
-const planeGeo = new THREE.PlaneBufferGeometry(1, 1, 16, 16)
-const planeMaterial = new THREE.ShaderMaterial({
-    side: THREE.DoubleSide,
-    uniforms: {
-        uSrc: {value: gpTexture},
-        uTime: { value: 0 },
-        uResolution: { value: new THREE.Vector2(sizes.width, sizes.height) },
-        uMouse: { value: mouseMove },
-        uProgress: { value: 0 },
-    },
-    vertexShader: `               
-                uniform float uTime;
-                uniform vec2 uMouse;
-                varying vec2 vUv;
-                varying float vWave;
-                uniform float uProgress;    
-                            
-                vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-                vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-                vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
-                vec4 taylorInvSqrt(vec4 r){ return 1.79284291400159 - 0.85373472095314 * r; }
-                float snoise(vec3 v){
-                    const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
-                    const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
-                
-                    // First corner
-                    vec3 i  = floor(v + dot(v, C.yyy) );
-                    vec3 x0 =   v - i + dot(i, C.xxx) ;
-                
-                    // Other corners
-                    vec3 g = step(x0.yzx, x0.xyz);
-                    vec3 l = 1.0 - g;
-                    vec3 i1 = min( g.xyz, l.zxy );
-                    vec3 i2 = max( g.xyz, l.zxy );
-                
-                    //  x0 = x0 - 0. + 0.0 * C
-                    vec3 x1 = x0 - i1 + 1.0 * C.xxx;
-                    vec3 x2 = x0 - i2 + 2.0 * C.xxx;
-                    vec3 x3 = x0 - 1. + 3.0 * C.xxx;
-                
-                    // Permutations
-                    i = mod(i, 289.0 );
-                    vec4 p = permute( permute( permute(
-                    i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
-                    + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))
-                    + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
-                
-                    // Gradients
-                    // ( N*N points uniformly over a square, mapped onto an octahedron.)
-                    float n_ = 1.0/7.0; // N=7
-                    vec3  ns = n_ * D.wyz - D.xzx;
-                
-                    vec4 j = p - 49.0 * floor(p * ns.z *ns.z);  //  mod(p,N*N)
-                
-                    vec4 x_ = floor(j * ns.z);
-                    vec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)
-                
-                    vec4 x = x_ *ns.x + ns.yyyy;
-                    vec4 y = y_ *ns.x + ns.yyyy;
-                    vec4 h = 1.0 - abs(x) - abs(y);
-                
-                    vec4 b0 = vec4( x.xy, y.xy );
-                    vec4 b1 = vec4( x.zw, y.zw );
-                
-                    vec4 s0 = floor(b0)*2.0 + 1.0;
-                    vec4 s1 = floor(b1)*2.0 + 1.0;
-                    vec4 sh = -step(h, vec4(0.0));
-                
-                    vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
-                    vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
-                
-                    vec3 p0 = vec3(a0.xy,h.x);
-                    vec3 p1 = vec3(a0.zw,h.y);
-                    vec3 p2 = vec3(a1.xy,h.z);
-                    vec3 p3 = vec3(a1.zw,h.w);
-                
-                    //Normalise gradients
-                    vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
-                    p0 *= norm.x;
-                    p1 *= norm.y;
-                    p2 *= norm.z;
-                    p3 *= norm.w;
-                
-                    // Mix final noise value
-                    vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
-                    m = m * m;
-                    return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1),
-                    dot(p2,x2), dot(p3,x3) ) );
-                }
-                
-                void main()
-                {
-                    vec3 pos = position;
-                    float noiseFreq = 2.5;
-                    float noiseAmp = 0.04;
-                
-                    vec3 noisePos = vec3(sin(pos.x * noiseFreq + uTime),
-                                            pos.y ,
-                                            pos.z  );
-                    pos.x += snoise(noisePos) * noiseAmp ;
-                    pos.z += snoise(noisePos) * noiseAmp ;
-                
-                    vUv = uv;
-                    vWave = sin(pos.z);
-                
-                    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos , 1.);
-                }
-            `,
-    fragmentShader: `
-                uniform float uTime;
-                uniform float uProgress;
-                uniform vec2 uMouse;
-                varying vec2 vUv;
-                varying float vWave;
-                uniform sampler2D uSrc;               
-                void main()
-                {                
-                    float wave = vWave * 0.7;                               
-                    float r = texture2D(uSrc, vUv + wave).r;
-                    float g = texture2D(uSrc, vUv).g;
-                    float b = texture2D(uSrc, vUv).b ;                
-                    vec3 texture = vec3(r, g, b);                
-                    gl_FragColor = vec4(texture, 1.0);
-                }                
-            `
-})
-const plane = new THREE.Mesh(planeGeo, planeMaterial)
-
-const createPlane = (texture, w, h, d, pos, rx, ry, rz) => {
-    plane.scale.set(w,h,d)
-    plane.rotation.set(rx, ry, rz)
-
-    gui.add(plane.position, 'x' , -10 , 10 , 0.001).name('px')
-    gui.add(plane.position, 'y' , 0.001 , Math.PI , 0.001).name('py')
-    gui.add(plane.position, 'z' , 0.001 , Math.PI , 0.001).name('pz')
-    gui.add(plane.rotation, 'x' , 0.001 , Math.PI , 0.001).name('rx')
-    gui.add(plane.rotation, 'y' , 0.001 , Math.PI , 0.001).name('ry')
-    gui.add(plane.rotation, 'z' , 0.001 , Math.PI , 0.001).name('rz')
-    gui.add(plane.scale, 'x' , 1 , 10 , 0.001).name('sx')
-    gui.add(plane.scale, 'y' , 1 , 10 , 0.001).name('sy')
-    gui.add(plane.scale, 'z' , 1 , 10 , 0.001).name('sz')
-
-    plane.position.copy(pos)
-    scene.add(plane)
-}
-
-createPlane(gpTexture,
-    4.445, 7.022, 0.008 ,
-    {x: -4.169, y: -.1, z: -2},
-    0.0,
-    0.0,
-    0.0
-)
-
-// Click explore
-let exploreDiv = document.querySelector('#exploreText')
-
-exploreDiv.addEventListener('click', (e) => {
-    exploreTimeLine.reverse()
-    titleTimeline.reverse()
-    bodyColorChangeTimeline.play()
-    gltfSceneAni.play()
-
-
-// createPlane(gp2Texture,
-//     2.6, 4, 0.01 ,
-//     {x: 0, y: -.3, z: -4},
-//     0.001,
-//     0.003,
-//     0.001
-// )
-//     createPlane(gp1Texture,
-//         2.08, 4, 0.008 ,
-//         {x: 3.8, y: -.1, z: -2},
-//         -0.001,
-//         -0.631,
-//         -0.001
-//     )
-})
-
-//  Gsap Progress Animation
-let tl = gsap.timeline()
-let bodyDom = document.querySelector('body')
-bodyDom.addEventListener('click' , () => {
-    if (bodyDom.classList.contains("done")){
-        tl.to(planeMaterial.uniforms.uProgress  , {
-            duration: 1,
-            value: 0,
-        })
-        bodyDom.classList.remove('done')
-    } else {
-        tl.to(planeMaterial.uniforms.uProgress  , {
-            duration: 1,
-            value: 1,
-        })
-        bodyDom.classList.add('done')
-    }
-})
-
 /**
  * Animate
  */
@@ -605,7 +597,34 @@ const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
 
-    planeMaterial.uniforms.uTime.value = elapsedTime
+    for (const point of points) {
+        const screenPos = point.position.clone()
+        screenPos.project(camera)
+
+        rayCaster.setFromCamera(screenPos, camera)
+        const intersects = rayCaster.intersectObjects(scene.children, true)
+
+        if (intersects.length === 0){
+            intersectPointAppear()
+        } else {
+            const intersectionDistance = intersects[0].distance
+            const pointDistance = point.position.distanceTo(camera.position)
+
+            if (intersectionDistance < pointDistance){
+                intersectPointDisappear()
+            } else {
+                intersectPointAppear()
+            }
+        }
+
+        const translateX = (screenPos.x * sizes.width * 0.5).toFixed(2)
+        const translateY = (- (screenPos.y * sizes.height * 0.5)).toFixed(2)
+
+        gsap.to(point.element,{
+            transform: `translate(${translateX}px, ${translateY}px)`,
+            ease: "power1"
+        })
+    }
 
     // Update controls
     controls.update()

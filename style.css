@@ -16,7 +16,8 @@ body{
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    background-color: #f7fff6;
+    background: #000;
+    user-select: none;
 }
 h1,h2,h3,h4,h5,h6{
     cursor: default;
@@ -29,6 +30,206 @@ h1,h2,h3,h4,h5,h6{
     outline: none;
     z-index: -1;
     /*z-index: 2;*/
+}
+svg{
+    position: absolute;
+}
+.pointClickContainer{
+    position: absolute;
+    z-index: 2;
+    /*display: none;*/
+    right: 2.5%;
+    top: 10%;
+    width: 40%;
+    height: 80vh;
+    /*overflow: hidden;*/
+    border-radius: 15px;
+    background-color: #000000;
+}
+.introText{
+    border-radius: 15px;
+    width: 100%;
+    height: 30%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: start;
+}
+.introTextInner{
+    line-height: 30px;
+    font-size: 20px;
+    color: #a9fe39;
+}
+.closePoint{
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    cursor: pointer;
+}
+.pointClickLowerDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.pointClickJsDiv{
+    position: absolute;
+    width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px;
+}
+.pointClickPhoto{
+    width: 30%;
+    height: 100%;
+    border-radius: 100px 100px 0 0 ;
+    position: relative;
+    display: flex;
+    align-items: start;
+}
+.pointClickPhotoImg{
+    position: absolute;
+    opacity: 0;
+    border-radius: 50px 50px 0 0 ;
+    width: 100%;
+    height: 60%;
+    -webkit-box-reflect: below 5px linear-gradient(transparent, transparent, #00000031);
+    filter: url(#noise);
+}
+.pointClickReason{
+    width: 60%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    background-color: #000000;
+}
+.pointClickReasonInner{
+    line-height: 30px;
+    font-size: 20px;
+    color: #fff;
+}
+.orderBtn{
+    position: absolute;
+    width: 120px;
+    height: 30px;
+    bottom: 5%;
+    right: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    border-radius: 50px;
+}
+.orderBtn p{
+    color: #000000;
+    font-size: 20px;
+}
+.point{
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    display: none;
+}
+.point:hover .point-container{
+    width: 200px;
+    height: 30px;
+}
+.point:hover .point-hover-text{
+    transform:  scale(1,1);
+}
+.point:hover .label{
+    transform:  scale(0,0);
+}
+.point-container{
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    transform: scale(1,1);
+    transform-origin: left;
+    transition: transform 0.5s;
+}
+.label{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000000;
+    font-size: 20px;
+    transform: scale(1,1);
+    transition: transform 0.3s;
+}
+.point-hover-text{
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    padding-left: 5px;
+    transform: scale(0,0);
+    transition: transform 0.3s;
+    display: flex;
+    text-align: center;
+    justify-content: start;
+    align-items: center;
+    color: #000;
+    font-weight: bolder;
+}
+.leftWebGlContainer{
+    width: 500px;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    right: 0;
+    /*display: none;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.upperWelcome{
+    width: 500px;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.welcomeDiv{
+    width: 500px;
+    height: 26%;
+    text-align: start;
+    overflow: hidden;
+}
+.welcomeText{
+    display: none;
+    font-size: 100px;
+    text-align: start;
+    color: #a9fe39;
+}
+.lowerWelcome{
+    width: 500px;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+.welcomeSmallDiv{
+    width: 500px;
+    height: 10%;
+    overflow: hidden;
+}
+.welcomeSmallText{
+    display: none;
+    font-size: 20px;
 }
 .text-container{
     width: 100%;
@@ -98,13 +299,13 @@ video, audio{
     align-items: center;
 }
 .nav h1{
-    color: #00a9a5;
+    color: #fff;
 }
 .nav h2{
-    color: #00539c;
+    color: #fff;
 }
 .right-nav h3, .right-nav span{
-    color: #00539c;
+    color: #fff;
 }
 .music-nav{
     width: 30%;
@@ -134,15 +335,7 @@ video, audio{
     height: 20%;
     right: -18%;
     bottom: 35%;
-    /* From https://css.glass */
-    background: rgba(255, 255, 255, 0.6);
     border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.8);
-    /*filter: drop-shadow(4px 4px 10px #000);*/
-    box-shadow: inset 10px 10px 10px rgba(0,0,0,0.05),
-                15px 25px 10px rgba(0,0,0,0.05),
-                15px 20px 20px rgba(0,0,0,0.05),
-                inset -10px -10px 15px rgba(255,255,255,0.9);
 }
 .lower{
     z-index: 1;
@@ -163,7 +356,7 @@ video, audio{
     position: absolute;
     bottom: -50px;
     letter-spacing: 1px;
-    color: #241715;
+    color: #000000;
     cursor: pointer;
 }
 .body{
@@ -193,7 +386,7 @@ video, audio{
     mix-blend-mode: difference;
 }
 .title{
-    color: #241715;
+    color: #a9fe39;
 }
 .createdBy{
     width: 100%;
@@ -208,7 +401,7 @@ video, audio{
     align-items: start;
 }
 .createdBy h3{
-    color: #241715;
+    color: #fff;
 }
 .footer{
     width: 100%;
@@ -238,22 +431,30 @@ video, audio{
     overflow: hidden;
     transform-origin: left;
     border-radius: 50px;
+}
+.blurBg{
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(7px);
     -webkit-backdrop-filter: blur(7px);
     border: 1px solid rgba(255, 255, 255, 0.8);
     filter: drop-shadow(4px 4px 10px #ffffff);
     box-shadow: inset 10px 10px 10px rgba(0,0,0,0.05),
-                15px 25px 10px rgba(0,0,0,0.05),
-                15px 20px 20px rgba(0,0,0,0.05),
-                inset -10px -10px 15px rgba(255,255,255,0.9);
-    cursor: pointer;
+    15px 25px 10px rgba(0,0,0,0.05),
+    15px 20px 20px rgba(0,0,0,0.05),
+    inset -10px -10px 15px rgba(255,255,255,0.9);
+}
+.gradientBg{
+    background: hsla(86, 99%, 61%, 1);
+    background: linear-gradient(90deg, hsla(86, 99%, 61%, 1) 0%, hsla(64, 100%, 52%, 1) 100%);
+    background: -moz-linear-gradient(90deg, hsla(86, 99%, 61%, 1) 0%, hsla(64, 100%, 52%, 1) 100%);
+    background: -webkit-linear-gradient(90deg, hsla(86, 99%, 61%, 1) 0%, hsla(64, 100%, 52%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#A8FE39", endColorstr="#EDFF08", GradientType=1 );
+    backdrop-filter: blur(7px);
 }
 #exploreText{
     font-size: 30px;
     font-weight: 900;
-    color: #eea47f;
-    text-shadow: -2px -2px 5px #ffffff;
+    color: #000;
     text-transform: uppercase;
 }
 
@@ -266,7 +467,7 @@ video, audio{
     background: transparent;
 }
 .emoji-div{
-    width: 10%;
+    width: 5%;
     height: 100%;
     background: transparent;
     display: flex;
@@ -274,7 +475,11 @@ video, audio{
     /*transform: translateY(-100%);*/
 }
 .emoji-img-div{
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
     transform: translate(700px , 590px);
+}
+.emoji-img-div img{
+    width: 50px;
+    height: 50px;
 }
