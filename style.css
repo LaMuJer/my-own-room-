@@ -5,22 +5,34 @@
     font-family: 'MilkyWalky-Regular';
     color: #fff;
 }
+:root {
+    --left :  rgba(169,254,57,1);
+    --right : rgba(239,255,10,.2);
+    --loader-bg-color: linear-gradient(90deg, var(--left) 0%, var(--left) 0%, var(--right) 0%);
+}
 @font-face {
     font-family: 'MilkyWalky-Regular';
-    src: url('fonts/MilkyWalky-Regular.ttf') ;
+    src: url('/fonts/MilkyWalky-Regular.ttf') ;
     font-weight: 200 800;
     font-display: swap;
     font-style: normal;
 }
+/*html {*/
+/*    width: 100vw;*/
+/*    height: 100vh;*/
+/*}*/
 body{
     width: 100%;
-    height: 100vh;
+    height: 100%;
     overflow: hidden;
     background: #000;
     user-select: none;
 }
 h1,h2,h3,h4,h5,h6{
     cursor: default;
+}
+a{
+    text-decoration: none;
 }
 .webgl
 {
@@ -31,13 +43,74 @@ h1,h2,h3,h4,h5,h6{
     z-index: -1;
     /*z-index: 2;*/
 }
-svg{
+.socials-container{
     position: absolute;
+    display: flex;
+    right: 2%;
+    top: 20px;
+}
+.social-link{
+    display: none;
+    z-index: 3;
+    padding: 0 10px;
+    cursor: pointer;
+}
+.abtClose {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    cursor: pointer;
+}
+.abt-container{
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    border-radius: 10px;
+    display: none;
+}
+.about-text{
+    width: 100%;
+    height: 65%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 20px 30px 0 30px ;
+}
+.about-text p,.special-thanks p {
+    font-size: 20px;
+    letter-spacing: 1px;
+    line-height: 30px;
+}
+.about-text p span, .special-thanks p span{
+    font-size: 22px;
+    color: #a9fe39;
+    font-weight: bolder;
+    letter-spacing: 1px;
+    line-height: 30px;
+}
+.special-thanks p span{
+    margin-left: 20px;
+}
+.special-thanks{
+    padding: 0 50px;
+    margin-top: 10px;
+    width: 100%;
+    height: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
 }
 .pointClickContainer{
     position: absolute;
     z-index: 2;
-    /*display: none;*/
+    visibility: hidden;
+    transform: scale(0);
+    opacity: 0;
     right: 2.5%;
     top: 10%;
     width: 40%;
@@ -69,65 +142,29 @@ svg{
 }
 .pointClickLowerDiv{
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
     align-items: center;
-
 }
 .pointClickJsDiv{
-    position: absolute;
+    position: relative;
     width: 100%;
     height: 70%;
+    padding: 40px 10px 20px 10px;
+}
+.pointClickPhoto{
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 40px;
-}
-.pointClickPhoto{
-    width: 30%;
-    height: 100%;
-    border-radius: 100px 100px 0 0 ;
-    position: relative;
-    display: flex;
-    align-items: start;
 }
 .pointClickPhotoImg{
-    position: absolute;
-    opacity: 0;
-    border-radius: 50px 50px 0 0 ;
-    width: 100%;
+    position: relative;
+    z-index: 1;
+    border-radius: 50px 0px 0 0 ;
+    width: 30%;
     height: 60%;
     -webkit-box-reflect: below 5px linear-gradient(transparent, transparent, #00000031);
-    filter: url(#noise);
-}
-.pointClickReason{
-    width: 60%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: start;
-    background-color: #000000;
-}
-.pointClickReasonInner{
-    line-height: 30px;
-    font-size: 20px;
-    color: #fff;
-}
-.orderBtn{
-    position: absolute;
-    width: 120px;
-    height: 30px;
-    bottom: 5%;
-    right: 5%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    border-radius: 50px;
-}
-.orderBtn p{
-    color: #000000;
-    font-size: 20px;
 }
 .point{
     position: absolute;
@@ -298,6 +335,9 @@ video, audio{
     justify-content: space-around;
     align-items: center;
 }
+#about{
+    cursor: pointer;
+}
 .nav h1{
     color: #fff;
 }
@@ -330,6 +370,7 @@ video, audio{
 }
 .music-box{
     position: absolute;
+    display: none;
     z-index: 2;
     width: 200px;
     height: 20%;
@@ -377,7 +418,7 @@ video, audio{
     z-index: -2;
 }
 .title-div span{
-    overflow-y: hidden;
+    overflow: hidden;
 }
 .title-div span h1{
     font-weight: bolder;
@@ -401,6 +442,7 @@ video, audio{
     align-items: start;
 }
 .createdBy h3{
+    letter-spacing: 1px;
     color: #fff;
 }
 .footer{
@@ -433,15 +475,12 @@ video, audio{
     border-radius: 50px;
 }
 .blurBg{
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(7px);
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(7px);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    filter: drop-shadow(4px 4px 10px #ffffff);
-    box-shadow: inset 10px 10px 10px rgba(0,0,0,0.05),
-    15px 25px 10px rgba(0,0,0,0.05),
-    15px 20px 20px rgba(0,0,0,0.05),
-    inset -10px -10px 15px rgba(255,255,255,0.9);
+    border: 1px solid #ffffff10;
+    filter: drop-shadow(4px 4px 10px #000);
+    box-shadow: inset 0 5px 10px #ffffff10;
 }
 .gradientBg{
     background: hsla(86, 99%, 61%, 1);
@@ -482,4 +521,35 @@ video, audio{
 .emoji-img-div img{
     width: 50px;
     height: 50px;
+}
+
+.loading{
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loader{
+    width: 100%;
+    overflow: hidden;
+}
+.loader br{
+    display: none;
+}
+.loaderText{
+    font-size: 100px;
+    font-weight: bolder;
+    letter-spacing: 1px;
+    text-align: center;
+    padding: 10px;
+    will-change: backgroundImage;
+    background: var(--loader-bg-color);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.loaderSmallText{
+    font-size: 30px;
 }

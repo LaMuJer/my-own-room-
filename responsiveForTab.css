@@ -1,0 +1,130 @@
+@media all
+and (min-width: 768px)
+and (max-width: 1112px) {
+
+
+    .webgl
+    {
+        max-width: 70vw ;
+        max-height: 70vh ;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+    .title-div{
+        margin-top: 60px;
+        height: 10%;
+    }
+    .title-div span{
+        overflow-y: hidden;
+        display: flex;
+        align-items: start;
+    }
+    .title-div span h1{
+        font-size: 100px;
+    }
+    .tBr{
+        display: block;
+    }
+    .nav h1{
+        font-size: 30px;
+    }
+    .nav h2{
+        font-size: 25px;
+        padding-right: 10px;
+    }
+    .right-nav {
+        width: 25%;
+    }
+    .music-nav {
+        width: 30%;
+    }
+    .createdBy{
+        top: 20%;
+        right: 5%;
+        padding: 0;
+        letter-spacing: 1px;
+    }
+    .music-box{
+        width: 200px;
+        height: 15%;
+        right: -20%;
+        transform: scale(.6);
+    }
+    .emoji-img-div img{
+        width: 40px;
+        height: 40px;
+    }
+    .footer-left,.footer-right{
+        display: none;
+    }
+    .footer-center{
+        width: 100%;
+        margin-bottom: 50px;
+    }
+    .explore-div{
+        width: 70%;
+        height: 35%;
+    }
+    .leftWebGlContainer{
+        width: 700px;
+        height: 40vh;
+        top: 10%;
+        right: 10%;
+    }
+    .upperWelcome{
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        height: 20%;
+        margin-top: 50px;
+        margin-left: 15px;
+    }
+    .lowerWelcome{
+        align-items: start;
+    }
+    .welcomeSmallText{
+        font-size: 30px;
+        letter-spacing: 1px;
+    }
+    .welcomeDiv{
+        width: 650px;
+        height: 100%;
+    }
+    .welcomeDiv:nth-child(2){
+        margin-left: -10px;
+    }
+    .welcomeText{
+        font-size: 60px;
+        text-align: center;
+    }
+    .lowerWelcome{
+        height: 50%;
+        align-items: center;
+    }
+    .welcomeSmallDiv{
+        width: 500px;
+        height: 20%;
+        margin-left: 150px;
+        overflow: hidden;
+    }
+    .pointClickContainer{
+        right: 2.5%;
+        top: 10%;
+        width: 80%;
+        height: 60vh;
+    }
+    .loading{
+        margin-left: -30px;
+    }
+    .loader br{
+        display: block;
+    }
+    .loaderText{
+        font-size: 100px;
+    }
+    .loaderSmallText{
+        font-size: 30px;
+    }
+}

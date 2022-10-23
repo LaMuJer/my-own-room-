@@ -10,6 +10,19 @@
 
     <canvas class="webgl"></canvas>
 
+    <div class="loading">
+      <div class="loader">
+        <h1 class="loaderText">Created by <br> Hsu Win Lat </h1>
+        <h1 class="loaderText loaderSmallText"> with loads of Trials </h1>
+      </div>
+    </div>
+
+    <div class="socials-container">
+      <div class="social-link"><a target="_blank" href="https://www.facebook.com/staphy.staphy.9/">Fb</a></div>
+      <div class="social-link"><a target="_blank" href="https://twitter.com/racheldarcy365">Tw</a></div>
+      <div class="social-link"><a target="_blank" href="https://github.com/laMuJer">GitHub</a></div>
+    </div>
+
     <div class="point point0">
       <div class="point-container gradientBg">
         <div class="label">1</div>
@@ -25,7 +38,7 @@
     <div class="point point2">
       <div class="point-container gradientBg">
         <div class="label">3</div>
-        <div class="point-hover-text">Experience that I had a lot of fun</div>
+        <div class="point-hover-text">Characters that I really love</div>
       </div>
     </div>
 
@@ -54,17 +67,30 @@
       </div>
     </div>
 
-    <svg>
-      <filter id="noise" x="0%" y="0%" width="100%" height="100%">
-        <feTurbulence baseFrequency="0.0 0.0" result="NOISE" numOctaves="1" id="turbulence"/>
-        <feDisplacementMap in="SourceGraphic" in2="NOISE" scale="10" />
-      </filter>
-    </svg>
+<!--    About-->
+    <div class="abt-container blurBg">
+      <div class="abtClose">
+        <p>Close</p>
+      </div>
+      <div class="about-text">
+        <p>
+          After learning ThreeJs Journey by Bruno Simon, this is my first project.
+          <span>Gsap, Vite, ThreeJs, and Blender</span> are used to build this project.
+          I've grown more comfortable using ThreeJs while working on this project, and I've begun realizing how much fun I'm having.
+          You will find so many mistakes here but this is the first step of my ThreeJs Journey .
+        </p>
+      </div>
+      <div class="special-thanks">
+        <p>Special Thanks to</p>
+        <p>ThreeJs Journey by <span>Bruno Simon</span> </p>
+        <p>Model by <span>Andrew Woan</span></p>
+        <p>Fantastic Tutorials by <span>Yuri Artiukh</span></p>
+      </div>
+    </div>
 
     <div class="pointClickContainer">
       <div class="introText">
-        <p class="introTextInner" >Actually, I am not a book person. But these are the books that </p>
-        <p class="introTextInner">really really help me when I am at my lowest point.</p>
+        <p class="introTextInner" >These are my favourite books , movies and characters </p>
         <div class="closePoint">
           <p>Close</p>
         </div>
@@ -118,11 +144,11 @@
     <div class="all-container">
       <div class="nav">
         <div class="logo-nav">
-          <h1 class="textColor">room</h1>
+          <h1 class="textColor textDisAbt">room</h1>
         </div>
         <div class="right-nav">
           <div class="about-nav">
-            <h2 class="textColor">about</h2>
+            <h2 class="textColor textDisAbt" id="about">about</h2>
           </div>
           <div class="music-nav">
             <div class="pitches">
@@ -145,6 +171,7 @@
           <span><h1 class="title" id="up">w</h1></span>
           <span><h1 class="title" id="down">n</h1></span>
           <span><h1 class="title" id="up">&nbsp;</h1></span>
+          <br class="tBr">
           <span><h1 class="title" id="down">L</h1></span>
           <span><h1 class="title" id="up">i</h1></span>
           <span><h1 class="title" id="down">t</h1></span>

@@ -1,4 +1,6 @@
 import './style.css'
+import './responsiveForPh.css'
+import './responsiveForTab.css'
 import {gsap} from "gsap"; 
 import * as THREE from 'three'
 import * as dat from 'dat.gui'
@@ -19,6 +21,7 @@ let body = document.querySelector('body')
 let musicBox = document.querySelector('.music-box')
 let list1 = [...document.querySelectorAll('.list1 > h3')]
 const vd = document.getElementById('video')
+let mm = gsap.matchMedia()
 
 let pitchTimeLine = gsap.timeline()
     .to('.pitches > span', {
@@ -48,22 +51,30 @@ pitches.addEventListener('click', () => {
         pitchBool = true
     }
 })
+let musicNav = document.querySelector('.music-nav')
+function destroyMusicNav(){
+    gsap.to(musicNav, {
+        delay: 1,
+        duration: 1,
+        y: -100,
+        opacity: 0,
+        scale: 0,
+        display: 'none',
+        ease: 'power1'
+    })
+}
 
 let musicBoxAni = gsap.timeline()
 musicBoxAni.to(musicBox, {
     duration:.2,
-    xPercent: -130,
+    display: 'block',
+    xPercent: -80,
     ease: "power2"
 })
 musicBoxAni.pause()
 function changeMusicBox(bgC){
     musicBoxAni.to(musicBox,{
         backgroundColor: bgC,
-        filter: `drop-shadow(4px 4px 10px ${bgC})`,
-        boxShadow: `inset 10px 10px 10px ${bgC},
-                    0px 0px 5px ${bgC},
-                    0px 0px 5px ${bgC},
-                    inset -10px -10px 15px ${bgC}`
     })
 }
 let listAni = gsap.timeline()
@@ -86,50 +97,48 @@ let bodyColorChangeTimeline = gsap.timeline({paused: true})
         backgroundColor: "#000"
     })
 
-let titleTimeline = gsap.timeline()
+let titleTimeline = gsap.timeline({paused: true, delay: 1,})
     .from('.textColor',{
-        yPercent: 180,
+        duration: 1,
+        yPercent: 250,
         stagger: .2,
         ease: 'power1'
     })
     .from('#up' , {
         duration: 1,
         skewY: 60,
-        yPercent: 140,
+        yPercent: 160,
         stagger:{
             amount: 1,
             from: 'edges'
         },
-        ease: 'power1'
+        ease: 'power1.inOut'
     },+.1)
     .from('#down' , {
         duration: 1,
         skewY: -60,
-        yPercent: -140,
+        yPercent: -160,
         stagger:{
             amount: 1,
             from: 'edges'
         },
-        ease: 'power1'
+        ease: 'power1.inOut'
     },+.1)
 
-    // .to('.emoji-div',{
-    //     y: 0,
-    //     stagger: {
-    //         amount: 1,
-    //         from: 'start'
-    //     },
-    //     ease: 'power1'
-    // })
+function textDisappear(){
+    gsap.to('.textDisAbt', {
+        display: 'none'
+    })
+}
 
-
-let exploreTimeLine = gsap.timeline()
-    .from('.explore-div', {
+let exploreTimeLine = gsap.timeline({paused: true})
+    exploreTimeLine.from('.explore-div', {
         opacity: 0,
         yPercent: 100,
+        display: 'none',
         ease: 'power1'
     })
-    .to('#exploreText', {
+    exploreTimeLine.to('#exploreText', {
         duration: 40,
         xPercent: -70,
         repeat: -1,
@@ -138,7 +147,15 @@ let exploreTimeLine = gsap.timeline()
     })
 function destroyExplore() {
     gsap.to('.explore-div' , {
-        y: 200,
+        y: 100,
+        display: 'none',
+        ease: "power1"
+    })
+}
+function exploreAfterAbtClose() {
+    gsap.to('.explore-div' , {
+        y: 0,
+        display: 'block',
         ease: "power1"
     })
 }
@@ -165,14 +182,44 @@ const scene = new THREE.Scene()
  * Loaders
  */
 // Texture loader
+const loadingManager = new THREE.LoadingManager(
+    () => {
+        gsap.to('.loaderText',{
+            delay: .5,
+            duration: 2,
+            skewY: '10px',
+            transformOrigin: 'left',
+            y: 200,
+            ease: 'power1'
+        })
+        gsap.to('.loading',{
+            delay: .5,
+            duration: 1,
+            opacity: 0,
+            display: 'none',
+            ease: 'power1'
+        })
+        titleTimeline.play()
+        exploreTimeLine.play()
+        loaderGltfSceneAni.play()
+    },
+    (itemsUrl, itemsLoaded, itemsTotal) => {
+        const progressRatio = (itemsLoaded / itemsTotal) * 100
+        gsap.to('.loaderText',{
+            backgroundImage: `linear-gradient(90deg, var(--left) 0%, var(--left) ${progressRatio}%, var(--right) ${progressRatio}%)`,
+            stagger: .2,
+            ease: 'power1'
+        })
+    }
+)
 const textureLoader = new THREE.TextureLoader()
 
 // Draco loader
-const dracoLoader = new DRACOLoader()
+const dracoLoader = new DRACOLoader(loadingManager)
 dracoLoader.setDecoderPath('draco/')
 
 // GLTF loader
-const gltfLoader = new GLTFLoader()
+const gltfLoader = new GLTFLoader(loadingManager)
 gltfLoader.setDRACOLoader(dracoLoader)
 
 /**
@@ -225,23 +272,43 @@ function exploreTextColor(color,bgC,createColor){
 
 }
 
+function changeTitle(color) {
+    titleTimeline.to('.title', {
+        color: color
+    })
+}
+
 bts.addEventListener('click' , () => {
     audio.src = 'music/bts.mp3'
     vd.src = "textures/bts.mp4"
     audio.play()
-    clickChangeColor('#e0aaff' , '#7b2cbf')
-    changeMusicBox('#9d4edd')
-    exploreTextColor('#e0aaff','#240046','#c77dff')
+    changeTitle('#f5f5ef')
+    clickChangeColor('#f5f5ef' , '#990011')
+    changeMusicBox('#eaebea')
+    exploreTextColor('#202120','#eaebea','#eaebea')
 })
 
 hai.addEventListener('click' , () => {
     audio.src = 'music/hai.mp3'
     vd.src = "textures/hai.mp4"
     audio.play()
-    clickChangeColor('#e5e5e5' , '#fb8500')
-    changeMusicBox('#ffb703')
-    exploreTextColor('#000000','#ffb703','#e5e5e5')
+    changeTitle('#fcedda')
+    clickChangeColor('#e5e5e5' , '#ee4e34')
+    changeMusicBox('#ddc3a5 ')
+    exploreTextColor('#201e20','#ddc3a5','#201e20')
 })
+
+function socialReveal(){
+    gsap.to('.social-link' , {
+        delay: 3,
+        duration: 1,
+        stagger: .2,
+        opacity: 1,
+        scale: 1,
+        display: 'block',
+        ease: 'power1'
+    })
+}
 
 /**
  * Materials
@@ -260,19 +327,12 @@ const pic1Material = new THREE.MeshBasicMaterial({
 const screenMaterial = new THREE.MeshBasicMaterial({
     map: vdTexture
 })
-// Helpers
-// const axesHelper = new THREE.AxesHelper( 5 );
-// scene.add( axesHelper );
-//
-// const size = 10;
-// const divisions = 10;
-// const gridHelper = new THREE.GridHelper( size, divisions );
-// scene.add( gridHelper );
 
 /**
  * Model
  */
 let gltfSceneAni = gsap.timeline({paused: true, })
+let loaderGltfSceneAni = gsap.timeline({paused: true, })
 gltfLoader.load(
     'models/finalBakedRoomA.glb',
     (gltf) =>
@@ -303,8 +363,25 @@ gltfLoader.load(
         gui.add(gltf.scene.rotation,'z' , -5 , 5 , 0.001).name('rotateZ')
 
         gltf.scene.position.set(-0.1963, -0.782 , 1.864)
-        gltf.scene.scale.set(0.06,0.06,0.06)
-        gltf.scene.rotation.set(0, 0.78 , 0)
+        gltf.scene.scale.set(0.01,0.01,0.01)
+        // gltf.scene.rotation.set(0, 0.78 , 0)
+
+        loaderGltfSceneAni.to(gltf.scene.scale,{
+            delay: .5,
+            duration: 1,
+            x: 0.06,
+            y: 0.06,
+            z: 0.06,
+            ease: 'power1'
+        })
+        loaderGltfSceneAni.to(gltf.scene.rotation,{
+            duration: 1,
+            x: 0,
+            y: 0.78 ,
+            z: 0,
+            ease: 'power1'
+        })
+
         scene.add(gltf.scene)
 
         gltfSceneAni.to(gltf.scene.position,{
@@ -324,6 +401,42 @@ gltfLoader.load(
             x: -.001,
             y: 1,
             z: -0.001,
+        })
+        mm.add('(max-width: 500px)' , () => {
+            gltfSceneAni.to(webgl,{
+                zIndex: 1,
+                maxWidth: '100vw',
+                maxHeight: '100vh',
+                top: '70%',
+            })
+            gltfSceneAni.to(gltf.scene.position,{
+                x: -0.3,
+                y: -1.693,
+                z: -0.916,
+            })
+            gltfSceneAni.to(gltf.scene.scale,{
+                x: 0.1,
+                y: 0.1,
+                z: 0.1,
+            })
+        })
+        mm.add('(min-width: 768px) and (max-width: 1112px)' , () => {
+            gltfSceneAni.to(webgl,{
+                zIndex: 1,
+                maxWidth: '100vw',
+                maxHeight: '100vh',
+                top: '70%',
+        })
+            gltfSceneAni.to(gltf.scene.position,{
+                x: -0.3,
+                y: -1.693,
+                z: -0.916,
+            })
+            gltfSceneAni.to(gltf.scene.scale,{
+                x: 0.13,
+                y: 0.13,
+                z: 0.13,
+            })
         })
     }
 )
@@ -347,21 +460,33 @@ camera.position.z = 6
 scene.add(camera)
 
 let closePoint = document.querySelector('.closePoint')
+let abtClose = document.querySelector('.abtClose')
 closePoint.addEventListener('click', () => {
     gsap.to(camera.position, {
-        duration: 2,
+        duration: 1.5,
         x: 0,
         y: 0,
         z: 6,
         ease: 'power1',
     })
     gsap.to(camera.scale, {
-        duration: 2,
+        duration: 1.5,
         x: 1,
         y: 1,
         z: 1,
         ease: 'power1',
     })
+    pointAss.reverse()
+})
+abtClose.addEventListener('click', () => {
+    exploreAfterAbtClose()
+    gsap.to('.abt-container' , {
+        y: -100,
+        opacity: 0,
+        scale: 0,
+        ease: 'power1'
+    })
+
 })
 
 gui.add(camera.position, 'x', -20, 20, 0.001).name('cameraX')
@@ -404,24 +529,32 @@ const rayCaster = new THREE.Raycaster()
 const points = [
     {
         position : new THREE.Vector3(-2, 0.8 , -1.04),
+        mPosition: new THREE.Vector3(0,0,0),
         element: document.querySelector('.point0'),
         cameraPos : new THREE.Vector3(8.069,-1.564,6 ),
         cameraScaleZ: new THREE.Vector3(1,1,7.548 ),
     },
     {
         position : new THREE.Vector3(-3.5, -0.5 , -1.04),
+        mPosition: new THREE.Vector3(0,0,0),
         element: document.querySelector('.point1'),
         cameraPos : new THREE.Vector3(10.671,4.033,5.075),
         cameraScaleZ: new THREE.Vector3(1,1,12 ),
     },
     {
         position : new THREE.Vector3(0, 0.2 , -1.04),
+        mPosition: new THREE.Vector3(0,0,0),
         element: document.querySelector('.point2'),
-        cameraPos : new THREE.Vector3(1,0,1 )
+        cameraPos : new THREE.Vector3(-4.43,-0.002,7.028 ),
+        cameraScaleZ: new THREE.Vector3(1,1,2.602 ),
     }
 ]
-points.forEach((point) => {
+let pointClickLowerDiv = document.querySelector('.pointClickLowerDiv')
+let pointAss = gsap.timeline({paused: true})
+
+points.forEach((point,index) => {
     point.element.addEventListener('click', () => {
+        pointAss.play()
         gsap.to(camera.position, {
             duration: 2,
             x: point.cameraPos.x ,
@@ -436,6 +569,25 @@ points.forEach((point) => {
             z: point.cameraScaleZ.z,
             ease: 'power1'
         })
+        pointAss.to('.pointClickContainer', {
+            delay: .5,
+            duration: 1,
+            scale: 1,
+            opacity: 1,
+            visibility: 'visible',
+            ease: 'power1',
+        })
+        switch (index) {
+            case 0 : {
+                return pointFun(books,'b')
+            }
+            case 1 : {
+                return pointFun(movies,'m')
+            }
+            case 2 : {
+                return pointFun(projects,'p')
+            }
+        }
     })
 })
 
@@ -471,7 +623,7 @@ function welcomeTo (className, each) {
         display: 'block',
     })
     gsap.from(className, {
-        delay: 1,
+        delay: 2,
         duration: 2,
         skewY: 20,
         transformOrigin: 'left',
@@ -486,6 +638,19 @@ function welcomeTo (className, each) {
     })
 }
 
+let aboutTl = gsap.timeline({paused:true})
+let aboutId = document.getElementById('about')
+aboutId.addEventListener('click', () => {
+    destroyExplore()
+    gsap.to('.abt-container', {
+        opacity: 1,
+        scale: 1,
+        display: 'block',
+        y: -250,
+        ease: 'power1',
+    })
+})
+
 // Click explore
 let exploreDiv = document.querySelector('#exploreText')
 exploreDiv.addEventListener('click', (e) => {
@@ -494,62 +659,35 @@ exploreDiv.addEventListener('click', (e) => {
     bodyColorChangeTimeline.play()
     gltfSceneAni.play()
     destroyCartoon()
+    socialReveal()
+    textDisappear()
     welcomeTo('.welcomeText', .5)
     welcomeTo('.welcomeSmallText', .2)
+    destroyMusicNav()
     revealPoints()
+    musicBoxAni.reverse()
 })
 
-//  Gsap Progress Animation
-let tl = gsap.timeline()
-let value = 0
-let decreaseVal = 0
-let bodyDom = document.querySelector('body')
-bodyDom.addEventListener('click' , () => {
-    tl.from('#turbulence' , {
-        attr: {'baseFrequency' : '.5,0.5'},
-        ease: 'power1',
-    })
-
-    if (value < 4 && decreaseVal >= 0){
-        value++
-        if (value > 0 && value < 4){
-            tl.to(`#bookImg${value}`, {
-                opacity: 1
-            })
-            console.log('between')
-        }
-        console.log(value)
-        if (value > 3 ){
-            decreaseVal = value - 2
-            tl.to(`#bookImg${decreaseVal+1}`, {
-                opacity: 0
-            })
-            tl.to(`#bookImg${decreaseVal}`, {
-                opacity: 1
-            })
-        }
-    }
-})
-
-let pointClickLowerDiv = document.querySelector('.pointClickLowerDiv')
-    books.map(book => {
-        pointClickLowerDiv.innerHTML += `
-            <div class="pointClickJsDiv">
-                <div class="pointClickPhoto" >
-                  <img class="pointClickPhotoImg" src='${book.img}' alt="bookImg" id="bookImg${book.id}">                 
-                </div>  
-                <div class="pointClickReason" id="bookPara${book.id}">
-                  <p class="pointClickReasonInner" >
-                    ${book.reason}
-                  </p>
-                  <a target="_blank" class="orderBtn gradientBg" href="${book.link}" id="bookLink${book.id}">
-                    <p>Order</p>
-                  </a>
-                </div>   
+const pointFun = (point, kind) => {
+    point.forEach((book,i) => {
+        pointClickLowerDiv.innerHTML = `
+        <div class="pointClickJsDiv">
+            <div class="pointClickPhoto" >           
+                <img class="pointClickPhotoImg" src='textures/${kind}${i+1}.jpg' alt="bookImg"/> 
+                <img class="pointClickPhotoImg" src='textures/${kind}${i}.jpg' alt="bookImg"/> 
+                <img class="pointClickPhotoImg" src='textures/${kind}${i-1}.jpg' alt="bookImg"/> 
             </div>                
-        `
+        </div>                
+    `
     })
-
+    pointAss.from('.pointClickPhotoImg', {
+        yPercent: 100,
+        opacity: 0,
+        scale: 0,
+        stagger: .1,
+        ease: 'power1'
+    }, +1)
+}
 
 window.addEventListener('resize', () =>
 {
@@ -573,6 +711,7 @@ controls.enableDamping = true
 controls.enableRotate = true
 controls.rotateSpeed = .1
 controls.maxPolarAngle = 90
+controls.maxDistance = 6
 
 /**
  * Renderer
