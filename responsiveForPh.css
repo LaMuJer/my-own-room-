@@ -77,10 +77,18 @@
         width: 30px;
         height: 30px;
     }
-    .leftWebGlContainer{
+    .leftWebGlContainer {
+        width: 100%;
+        display: none;
         height: 40vh;
         top: 10%;
-        right: -30%;
+        left: 0;
+    }
+    .videoContainer {
+        display: none;
+    }
+    .emoji-container {
+        display: none;
     }
     .upperWelcome{
         flex-direction: row;

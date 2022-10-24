@@ -553,3 +553,7 @@ video, audio{
 .loaderSmallText{
     font-size: 30px;
 }
+#video{
+    width: 100px;
+    height: 100px;
+}

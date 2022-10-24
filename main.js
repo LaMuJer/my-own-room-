@@ -407,7 +407,7 @@ gltfLoader.load(
                 zIndex: 1,
                 maxWidth: '100vw',
                 maxHeight: '100vh',
-                top: '70%',
+                top: '55%',
             })
             gltfSceneAni.to(gltf.scene.position,{
                 x: -0.3,
@@ -425,7 +425,7 @@ gltfLoader.load(
                 zIndex: 1,
                 maxWidth: '100vw',
                 maxHeight: '100vh',
-                top: '70%',
+                top: '60%',
         })
             gltfSceneAni.to(gltf.scene.position,{
                 x: -0.3,
@@ -618,6 +618,11 @@ function intersectPointDisappear(){
     })
 }
 
+let leftContainerTl = gsap.timeline({paused: true})
+leftContainerTl.to('.leftWebGlContainer', {
+    display: 'block',
+})
+
 function welcomeTo (className, each) {
     gsap.to(className, {
         display: 'block',
@@ -660,6 +665,7 @@ exploreDiv.addEventListener('click', (e) => {
     gltfSceneAni.play()
     destroyCartoon()
     socialReveal()
+    leftContainerTl.play()
     textDisappear()
     welcomeTo('.welcomeText', .5)
     welcomeTo('.welcomeSmallText', .2)

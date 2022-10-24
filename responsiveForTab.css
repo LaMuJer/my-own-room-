@@ -67,11 +67,12 @@ and (max-width: 1112px) {
         width: 70%;
         height: 35%;
     }
-    .leftWebGlContainer{
-        width: 700px;
+    .leftWebGlContainer {
+        width: 100%;
+        display: none;
         height: 40vh;
         top: 10%;
-        right: 10%;
+        left: 15%;
     }
     .upperWelcome{
         flex-direction: row;
